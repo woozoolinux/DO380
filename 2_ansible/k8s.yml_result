@@ -1,0 +1,399 @@
+[student@workstation automation-ansible]$ ansible-playbook k8s.yml 
+
+PLAY [Logging in to OpenShift] *************************************************
+
+TASK [Ensure an access token is retrieved for the developer user] **************
+ok: [localhost]
+
+PLAY [Deploying the Hello World application] ***********************************
+
+TASK [Ensure the project exists] ***********************************************
+changed: [localhost]
+
+TASK [Ensure the Hello World application is deployed] **************************
+changed: [localhost]
+
+TASK [Ensure information about Pods is retrieved] ******************************
+ok: [localhost]
+
+TASK [Ensure the list of pods is displayed] ************************************
+ok: [localhost] => {
+    "pod_list": {
+        "api_found": true,
+        "changed": false,
+        "failed": false,
+        "resources": [
+            {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "metadata": {
+                    "annotations": {
+                        "openshift.io/scc": "restricted"
+                    },
+                    "creationTimestamp": "2023-04-19T00:18:57Z",
+                    "generateName": "hello-b47d498c9-",
+                    "labels": {
+                        "app": "hello",
+                        "pod-template-hash": "b47d498c9"
+                    },
+                    "managedFields": [
+                        {
+                            "apiVersion": "v1",
+                            "fieldsType": "FieldsV1",
+                            "fieldsV1": {
+                                "f:status": {
+                                    "f:conditions": {
+                                        "k:{\"type\":\"ContainersReady\"}": {
+                                            ".": {},
+                                            "f:lastProbeTime": {},
+                                            "f:lastTransitionTime": {},
+                                            "f:message": {},
+                                            "f:reason": {},
+                                            "f:status": {},
+                                            "f:type": {}
+                                        },
+                                        "k:{\"type\":\"Initialized\"}": {
+                                            ".": {},
+                                            "f:lastProbeTime": {},
+                                            "f:lastTransitionTime": {},
+                                            "f:status": {},
+                                            "f:type": {}
+                                        },
+                                        "k:{\"type\":\"Ready\"}": {
+                                            ".": {},
+                                            "f:lastProbeTime": {},
+                                            "f:lastTransitionTime": {},
+                                            "f:message": {},
+                                            "f:reason": {},
+                                            "f:status": {},
+                                            "f:type": {}
+                                        }
+                                    },
+                                    "f:containerStatuses": {},
+                                    "f:hostIP": {},
+                                    "f:startTime": {}
+                                }
+                            },
+                            "manager": "Go-http-client",
+                            "operation": "Update",
+                            "subresource": "status",
+                            "time": "2023-04-19T00:18:57Z"
+                        },
+                        {
+                            "apiVersion": "v1",
+                            "fieldsType": "FieldsV1",
+                            "fieldsV1": {
+                                "f:metadata": {
+                                    "f:generateName": {},
+                                    "f:labels": {
+                                        ".": {},
+                                        "f:app": {},
+                                        "f:pod-template-hash": {}
+                                    },
+                                    "f:ownerReferences": {
+                                        ".": {},
+                                        "k:{\"uid\":\"d8477b52-cc22-4064-a7f6-76740299ec51\"}": {}
+                                    }
+                                },
+                                "f:spec": {
+                                    "f:containers": {
+                                        "k:{\"name\":\"hello\"}": {
+                                            ".": {},
+                                            "f:image": {},
+                                            "f:imagePullPolicy": {},
+                                            "f:name": {},
+                                            "f:ports": {
+                                                ".": {},
+                                                "k:{\"containerPort\":8080,\"protocol\":\"TCP\"}": {
+                                                    ".": {},
+                                                    "f:containerPort": {},
+                                                    "f:protocol": {}
+                                                }
+                                            },
+                                            "f:resources": {},
+                                            "f:terminationMessagePath": {},
+                                            "f:terminationMessagePolicy": {}
+                                        }
+                                    },
+                                    "f:dnsPolicy": {},
+                                    "f:enableServiceLinks": {},
+                                    "f:restartPolicy": {},
+                                    "f:schedulerName": {},
+                                    "f:securityContext": {},
+                                    "f:terminationGracePeriodSeconds": {}
+                                }
+                            },
+                            "manager": "kube-controller-manager",
+                            "operation": "Update",
+                            "time": "2023-04-19T00:18:57Z"
+                        }
+                    ],
+                    "name": "hello-b47d498c9-mcts4",
+                    "namespace": "automation-ansible",
+                    "ownerReferences": [
+                        {
+                            "apiVersion": "apps/v1",
+                            "blockOwnerDeletion": true,
+                            "controller": true,
+                            "kind": "ReplicaSet",
+                            "name": "hello-b47d498c9",
+                            "uid": "d8477b52-cc22-4064-a7f6-76740299ec51"
+                        }
+                    ],
+                    "resourceVersion": "207409",
+                    "uid": "da138188-f6ab-4939-a282-6d0ef8d20edd"
+                },
+                "spec": {
+                    "containers": [
+                        {
+                            "image": "registry.ocp4.example.com:8443/redhattraining/hello-world-nginx:v1.0",
+                            "imagePullPolicy": "IfNotPresent",
+                            "name": "hello",
+                            "ports": [
+                                {
+                                    "containerPort": 8080,
+                                    "protocol": "TCP"
+                                }
+                            ],
+                            "resources": {},
+                            "securityContext": {
+                                "capabilities": {
+                                    "drop": [
+                                        "KILL",
+                                        "MKNOD",
+                                        "SETGID",
+                                        "SETUID"
+                                    ]
+                                },
+                                "runAsUser": 1000670000
+                            },
+                            "terminationMessagePath": "/dev/termination-log",
+                            "terminationMessagePolicy": "File",
+                            "volumeMounts": [
+                                {
+                                    "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                    "name": "kube-api-access-c4jv9",
+                                    "readOnly": true
+                                }
+                            ]
+                        }
+                    ],
+                    "dnsPolicy": "ClusterFirst",
+                    "enableServiceLinks": true,
+                    "imagePullSecrets": [
+                        {
+                            "name": "default-dockercfg-sk26r"
+                        }
+                    ],
+                    "nodeName": "worker04",
+                    "preemptionPolicy": "PreemptLowerPriority",
+                    "priority": 0,
+                    "restartPolicy": "Always",
+                    "schedulerName": "default-scheduler",
+                    "securityContext": {
+                        "fsGroup": 1000670000,
+                        "seLinuxOptions": {
+                            "level": "s0:c26,c10"
+                        }
+                    },
+                    "serviceAccount": "default",
+                    "serviceAccountName": "default",
+                    "terminationGracePeriodSeconds": 30,
+                    "tolerations": [
+                        {
+                            "effect": "NoExecute",
+                            "key": "node.kubernetes.io/not-ready",
+                            "operator": "Exists",
+                            "tolerationSeconds": 300
+                        },
+                        {
+                            "effect": "NoExecute",
+                            "key": "node.kubernetes.io/unreachable",
+                            "operator": "Exists",
+                            "tolerationSeconds": 300
+                        }
+                    ],
+                    "volumes": [
+                        {
+                            "name": "kube-api-access-c4jv9",
+                            "projected": {
+                                "defaultMode": 420,
+                                "sources": [
+                                    {
+                                        "serviceAccountToken": {
+                                            "expirationSeconds": 3607,
+                                            "path": "token"
+                                        }
+                                    },
+                                    {
+                                        "configMap": {
+                                            "items": [
+                                                {
+                                                    "key": "ca.crt",
+                                                    "path": "ca.crt"
+                                                }
+                                            ],
+                                            "name": "kube-root-ca.crt"
+                                        }
+                                    },
+                                    {
+                                        "downwardAPI": {
+                                            "items": [
+                                                {
+                                                    "fieldRef": {
+                                                        "apiVersion": "v1",
+                                                        "fieldPath": "metadata.namespace"
+                                                    },
+                                                    "path": "namespace"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "configMap": {
+                                            "items": [
+                                                {
+                                                    "key": "service-ca.crt",
+                                                    "path": "service-ca.crt"
+                                                }
+                                            ],
+                                            "name": "openshift-service-ca.crt"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "status": {
+                    "conditions": [
+                        {
+                            "lastProbeTime": null,
+                            "lastTransitionTime": "2023-04-19T00:18:57Z",
+                            "status": "True",
+                            "type": "Initialized"
+                        },
+                        {
+                            "lastProbeTime": null,
+                            "lastTransitionTime": "2023-04-19T00:18:57Z",
+                            "message": "containers with unready status: [hello]",
+                            "reason": "ContainersNotReady",
+                            "status": "False",
+                            "type": "Ready"
+                        },
+                        {
+                            "lastProbeTime": null,
+                            "lastTransitionTime": "2023-04-19T00:18:57Z",
+                            "message": "containers with unready status: [hello]",
+                            "reason": "ContainersNotReady",
+                            "status": "False",
+                            "type": "ContainersReady"
+                        },
+                        {
+                            "lastProbeTime": null,
+                            "lastTransitionTime": "2023-04-19T00:18:57Z",
+                            "status": "True",
+                            "type": "PodScheduled"
+                        }
+                    ],
+                    "containerStatuses": [
+                        {
+                            "image": "registry.ocp4.example.com:8443/redhattraining/hello-world-nginx:v1.0",
+                            "imageID": "",
+                            "lastState": {},
+                            "name": "hello",
+                            "ready": false,
+                            "restartCount": 0,
+                            "started": false,
+                            "state": {
+                                "waiting": {
+                                    "reason": "ContainerCreating"
+                                }
+                            }
+                        }
+                    ],
+                    "hostIP": "192.168.50.16",
+                    "phase": "Pending",
+                    "qosClass": "BestEffort",
+                    "startTime": "2023-04-19T00:18:57Z"
+                }
+            }
+        ]
+    }
+}
+
+TASK [Ensure the deployments is scaled up] *************************************
+changed: [localhost]
+
+TASK [Ensure a route exists] ***************************************************
+changed: [localhost]
+
+TASK [print route state] *******************************************************
+ok: [localhost] => {
+    "route": {
+        "changed": true,
+        "failed": false,
+        "method": "create",
+        "result": {
+            "apiVersion": "route.openshift.io/v1",
+            "kind": "Route",
+            "metadata": {
+                "annotations": {
+                    "openshift.io/host.generated": "true"
+                },
+                "creationTimestamp": "2023-04-19T00:19:05Z",
+                "managedFields": [
+                    {
+                        "apiVersion": "route.openshift.io/v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:spec": {
+                                "f:port": {
+                                    ".": {},
+                                    "f:targetPort": {}
+                                },
+                                "f:to": {
+                                    "f:kind": {},
+                                    "f:name": {},
+                                    "f:weight": {}
+                                },
+                                "f:wildcardPolicy": {}
+                            }
+                        },
+                        "manager": "OpenAPI-Generator",
+                        "operation": "Update",
+                        "time": "2023-04-19T00:19:05Z"
+                    }
+                ],
+                "name": "hello-svc",
+                "namespace": "automation-ansible",
+                "resourceVersion": "207495",
+                "uid": "b9af6e89-f397-4513-9b00-eea221175563"
+            },
+            "spec": {
+                "host": "hello-svc-automation-ansible.apps.ocp4.example.com",
+                "port": {
+                    "targetPort": 8080
+                },
+                "to": {
+                    "kind": "Service",
+                    "name": "hello-svc",
+                    "weight": 100
+                },
+                "wildcardPolicy": "None"
+            },
+            "status": {}
+        }
+    }
+}
+
+TASK [Ensure the application responds] *****************************************
+ok: [localhost]
+
+TASK [Ensure the application data are displayed] *******************************
+ok: [localhost] => {
+    "response['content']": "<html>\n  <body>\n    <h1>Hello, world from nginx!</h1>\n  </body>\n</html>\n"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=10   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
