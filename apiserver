@@ -1,0 +1,15 @@
+[student@workstation ~]$ oc get co/kube-apiserver
+NAME             VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+kube-apiserver   4.10.20   True        True          False      217d    NodeInstallerProgressing: 3 nodes are at revision 12; 0 nodes have achieved new revision 13
+
+
+[student@workstation DO380-data]$ watch "oc get co/kube-apiserver; oc get pod -n openshift-kube-apiserver -l app=openshift-kube-apiserver"
+Every 2.0s: oc get co/kube-apiserver; oc get pod -n openshift-kube-apiserver...  workstation.lab.example.com: Thu Apr 27 18:42:40 2023
+
+NAME             VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+kube-apiserver   4.10.20   True        True          False	217d    NodeInstallerProgressing: 1 nodes are at revision 12; 2 nodes
+are at revision 13
+NAME                      READY   STATUS    RESTARTS   AGE
+kube-apiserver-master01   5/5     Running   0          84s
+kube-apiserver-master02   5/5     Running   40         5d15h
+kube-apiserver-master03   5/5     Running   0          4m23s
