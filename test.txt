@@ -1,0 +1,6 @@
+TASK [Ensure the ClusterServiceVersion resource is ready] **********************
+FAILED - RETRYING: [localhost]: Ensure the ClusterServiceVersion resource is ready (30 retries left).
+FAILED - RETRYING: [localhost]: Ensure the ClusterServiceVersion resource is ready (29 retries left).
+FAILED - RETRYING: [localhost]: Ensure the ClusterServiceVersion resource is ready (28 retries left).
+FAILED - RETRYING: [localhost]: Ensure the ClusterServiceVersion resource is ready (27 retries left).
+
