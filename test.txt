@@ -4,3 +4,4 @@ FAILED - RETRYING: [localhost]: Ensure the ClusterServiceVersion resource is rea
 FAILED - RETRYING: [localhost]: Ensure the ClusterServiceVersion resource is ready (28 retries left).
 FAILED - RETRYING: [localhost]: Ensure the ClusterServiceVersion resource is ready (27 retries left).
 test
+2
