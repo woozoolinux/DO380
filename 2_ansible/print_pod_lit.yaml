@@ -1,0 +1,33 @@
+---
+- name: login openshift
+  hosts: localhost
+  tasks:
+  - name: Log in
+    redhat.openshift.openshift_auth:
+      username: admin
+      password: redhat
+      host: https://api.ocp4.example.com:6443
+      ca_cert: /etc/pki/tls/certs/ca-bundle.crt
+    register: openshift_auth_results
+
+- name: another playbook
+  hosts: localhost
+  module_defaults:
+    group/redhat.openshift.openshift:
+      host: https://api.ocp4.example.com:6443 
+      ca_cert: /etc/pki/tls/certs/ca-bundle.crt
+      api_key: "{{ openshift_auth_results.openshift_auth.api_key }}"
+
+  tasks:
+    - name: Get an existing Service object
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Pod
+        namespace: openshift-authentication
+      register: authentication_pod
+
+    - name: print authentication pod
+      debug:
+        var: authentication_pod.resources | json_query('[].metadata.name')
+#        var:  item.metadata.name
+#      loop: "{{ authentication_pod.resources }}"
