@@ -1,0 +1,71 @@
+- hosts: localhost
+  tasks:
+  - name: Log in (obtain access token)
+    redhat.openshift.openshift_auth:
+      ca_cert: /etc/pki/tls/certs/ca-bundle.crt
+      host: https://api.ocp4.example.com:6443
+      username: admin
+      password: redhat
+    register: api_result
+
+- hosts: localhost
+  vars:
+    project: automation-ansible
+  module_defaults:
+    group/redhat.openshift.openshift:
+      api_key: "{{ api_result.openshift_auth.api_key }}"
+      host: https://api.ocp4.example.com:6443
+      ca_cert: /etc/pki/tls/certs/ca-bundle.crt
+      namespace: "{{ project }}"
+    group/k8s:
+      api_key: "{{ api_result.openshift_auth.api_key }}"
+      host: https://api.ocp4.example.com:6443
+      ca_cert: /etc/pki/tls/certs/ca-bundle.crt
+      namespace: "{{ project }}"
+
+  tasks:
+  - name: Get a list of all pods from any namespace
+    kubernetes.core.k8s_info:
+      kind: Pod
+      namespace: openshift-authentication
+    register: pod_list
+
+  - name: Create a k8s namespace
+    redhat.openshift.k8s:
+      name: "{{ project }}"
+      api_version: v1
+      kind: Namespace
+      state: present
+  
+  - name: Create a Deployment by reading the definition from a local file
+    redhat.openshift.k8s:
+      state: present
+      src: files/hello.yml
+
+  - name: Get a list of all pods from any namespace
+    kubernetes.core.k8s_info:
+      kind: Pod
+    register: pod_list
+
+  - name: Scale deployment up, and extend timeout
+    kubernetes.core.k8s_scale:
+      api_version: v1
+      kind: Deployment
+      name: hello
+      replicas: 3
+      wait_timeout: 60
+
+  - name: Expose the insecure hello-world service externally
+    redhat.openshift.openshift_route:
+      service: hello-svc
+    register: route
+
+  - name: Check that a page returns a status 200 and fail if the word AWESOME is >
+    uri:
+      url: http://{{ route.result.spec.host }}
+      return_content: yes
+    register: route_content
+
+  - name: print content
+    debug:
+      msg: "{{ route_content.content }}"
